@@ -29,7 +29,7 @@ const digitImages = [
 function useUser() {
   const [user, setUser] = useState(null);
   useEffect(() => {
-    fetch('https://luckymillion.pro/api/user', {
+    fetch('https://moonstar543.pro/api/user', {
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token'),
         'Accept': 'application/json'
@@ -54,7 +54,7 @@ export default function DigitBetGame() {
   const [betMultiplier, setBetMultiplier] = useState(1);
 
   useEffect(() => {
-    fetch('https://luckymillion.pro/api/digitbet/history', {
+    fetch('https://moonstar543.pro/api/digitbet/history', {
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token'),
         'Accept': 'application/json'
@@ -118,7 +118,7 @@ export default function DigitBetGame() {
       };
       if (digit !== null) body.digit = digit;
 
-      const response = await fetch('https://luckymillion.pro/api/digitbet', {
+      const response = await fetch('https://moonstar543.pro/api/digitbet', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -132,7 +132,7 @@ export default function DigitBetGame() {
       if (data.data && data.data.balance) setUser(prev => ({ ...prev, balance: data.data.balance }));
       if (data.data && data.data.history) setHistory(data.data.history);
       else {
-        fetch('https://luckymillion.pro/api/digitbet/history', {
+        fetch('https://moonstar543.pro/api/digitbet/history', {
           headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token'),
             'Accept': 'application/json'

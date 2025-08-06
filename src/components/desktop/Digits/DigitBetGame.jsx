@@ -1,5 +1,16 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Container, Row, Col, Card, Button, Spinner, Alert, Table, Badge, Collapse } from 'react-bootstrap';
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Button,
+  Spinner,
+  Alert,
+  Table,
+  Badge,
+  Collapse,
+} from 'react-bootstrap';
 import UserBalance from './UserBalance';
 import NumberDisplay from './NumberDisplay';
 import { BetSizeButtons, BetColorButtons } from './BetButtons';
@@ -20,25 +31,33 @@ import digit5 from './assets/digit_img/5_Green-Purple.png';
 import digit6 from './assets/digit_img/6_Red.png';
 import digit7 from './assets/digit_img/7_Green.png';
 import digit8 from './assets/digit_img/8_Red.png';
-import digit9 from './assets/digit_img/9_Green.png';
+import digihttps://moonstar543.pro/api9_Green.png';
 
 const digitImages = [
-  digit0, digit1, digit2, digit3, digit4,
-  digit5, digit6, digit7, digit8, digit9
+  digit0,
+  digit1,
+  digit2,
+  digit3,
+  digit4,
+  digit5,
+  digit6,
+  digit7,
+  digit8,
+  digit9,
 ];
 
 // Custom hook for user
 function useUser() {
   const [user, setUser] = useState(null);
   useEffect(() => {
-    fetch('https://luckymillion.pro/api/user', {
+    fetch('https://moonstar543.pro/api/user', {
       headers: {
-        'Authorization': 'Bearer ' + localStorage.getItem('token'),
-        'Accept': 'application/json'
-      }
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+        Accept: 'application/json',
+      },
     })
-      .then(res => res.json())
-      .then(data => setUser(data.data));
+      .then((res) => res.json())
+      .then((data) => setUser(data.data));
   }, []);
   return [user, setUser];
 }
@@ -47,9 +66,9 @@ function BetHistoryTable({ history }) {
   const [openRow, setOpenRow] = React.useState(null);
 
   return (
-    <div className="table-responsive">
-      <Table striped bordered hover className="align-middle text-center">
-        <thead className="table-dark">
+    <div className='table-responsive'>
+      <Table striped bordered hover className='align-middle text-center'>
+        <thead className='table-dark'>
           <tr>
             <th>Date</th>
             <th>Bet Type</th>
@@ -66,18 +85,26 @@ function BetHistoryTable({ history }) {
             <React.Fragment key={idx}>
               <tr>
                 <td>{new Date(h.timestamp).toLocaleString()}</td>
-                <td className="text-capitalize">{h.betType}</td>
-                <td>{h.digit !== null && h.digit !== undefined ? h.digit : '-'}</td>
-                <td className="text-end">{parseFloat(h.bet_amount).toFixed(2)}</td>
-                <td className="text-end">{parseFloat(h.multiplier).toFixed(2)}</td>
+                <td className='text-capitalize'>{h.betType}</td>
+                <td>
+                  {h.digit !== null && h.digit !== undefined ? h.digit : '-'}
+                </td>
+                <td className='text-end'>
+                  {parseFloat(h.bet_amount).toFixed(2)}
+                </td>
+                <td className='text-end'>
+                  {parseFloat(h.multiplier).toFixed(2)}
+                </td>
                 <td>{h.rolledNumber}</td>
                 <td>
-                  <Badge bg={h.outcome === 'win' ? 'success' : 'danger'}>{h.outcome}</Badge>
+                  <Badge bg={h.outcome === 'win' ? 'success' : 'danger'}>
+                    {h.outcome}
+                  </Badge>
                 </td>
                 <td>
                   <Button
-                    size="sm"
-                    variant="outline-secondary"
+                    size='sm'
+                    variant='outline-secondary'
                     onClick={() => setOpenRow(openRow === idx ? null : idx)}
                     aria-controls={`collapse-row-${idx}`}
                     aria-expanded={openRow === idx}
@@ -89,11 +116,23 @@ function BetHistoryTable({ history }) {
               <tr>
                 <td colSpan={8} style={{ padding: 0, background: '#f9f9f9' }}>
                   <Collapse in={openRow === idx}>
-                    <div id={`collapse-row-${idx}`} className="p-2 text-start">
-                      <div><strong>Win Amount:</strong> {parseFloat(h.win_amount).toFixed(2)}</div>
+                    <div id={`collapse-row-${idx}`} className='p-2 text-start'>
+                      <div>
+                        <strong>Win Amount:</strong>{' '}
+                        {parseFloat(h.win_amount).toFixed(2)}
+                      </div>
                       <div>
                         <strong>Profit:</strong>{' '}
-                        <span style={{ color: parseFloat(h.profit) > 0 ? 'green' : (parseFloat(h.profit) < 0 ? 'red' : 'inherit') }}>
+                        <span
+                          style={{
+                            color:
+                              parseFloat(h.profit) > 0
+                                ? 'green'
+                                : parseFloat(h.profit) < 0
+                                ? 'red'
+                                : 'inherit',
+                          }}
+                        >
                           {parseFloat(h.profit).toFixed(2)}
                         </span>
                       </div>
@@ -126,14 +165,14 @@ export default function DigitBetGame() {
   const handleRollRef = useRef();
 
   useEffect(() => {
-    fetch('https://luckymillion.pro/api/digitbet/history', {
+    fetch('https://moonstar543.pro/apidigitbet/history', {
       headers: {
-        'Authorization': 'Bearer ' + localStorage.getItem('token'),
-        'Accept': 'application/json'
-      }
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+        Accept: 'application/json',
+      },
     })
-      .then(res => res.json())
-      .then(data => setHistory(data.data || []));
+      .then((res) => res.json())
+      .then((data) => setHistory(data.data || []));
   }, []);
 
   const generateNumber = () => Math.floor(Math.random() * 10);
@@ -141,7 +180,7 @@ export default function DigitBetGame() {
   // Define checkBet before handleRoll
   const checkBet = (number) => {
     if (selectedDigit !== null) {
-      const win = (number === selectedDigit);
+      const win = number === selectedDigit;
       setResultMessage(
         win
           ? `You Won! The number was ${number}.`
@@ -150,16 +189,23 @@ export default function DigitBetGame() {
       return win ? 'win' : 'lose';
     }
     let win = false;
-    let category = (number >= 0 && number <= 4) ? 'Small' : 'Big';
+    let category = number >= 0 && number <= 4 ? 'Small' : 'Big';
 
     switch (betType) {
-      case 'small': win = (number >= 0 && number <= 4); break;
-      case 'big': win = (number >= 5 && number <= 9); break;
-      default: break;
+      case 'small':
+        win = number >= 0 && number <= 4;
+        break;
+      case 'big':
+        win = number >= 5 && number <= 9;
+        break;
+      default:
+        break;
     }
 
-    if (win) setResultMessage(`You Won! The number was ${number}. It's ${category}.`);
-    else setResultMessage(`You Lost! The number was ${number}. It's ${category}.`);
+    if (win)
+      setResultMessage(`You Won! The number was ${number}. It's ${category}.`);
+    else
+      setResultMessage(`You Lost! The number was ${number}. It's ${category}.`);
     return win ? 'win' : 'lose';
   };
 
@@ -174,26 +220,26 @@ export default function DigitBetGame() {
         rolled_number: resultNumber,
         outcome: winStatus,
         bet_amount: betAmount,
-        multiplier: betMultiplier
+        multiplier: betMultiplier,
       };
 
-      const response = await fetch('https://luckymillion.pro/api/digitbet', {
+      const response = await fetch('https://moonstar543.pro/api/digitbet', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('token'),
-          'Accept': 'application/json'
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+          Accept: 'application/json',
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
       });
 
       const data = await response.json();
-      
+
       if (data.success) {
         setApiResponseMessage(`✅ ${data.message}`);
         // Update user balance from response
         if (data.data && data.data.balance) {
-          setUser(prev => ({ ...prev, balance: data.data.balance }));
+          setUser((prev) => ({ ...prev, balance: data.data.balance }));
         }
         // Update history from response
         if (data.data && data.data.history) {
@@ -202,21 +248,23 @@ export default function DigitBetGame() {
       } else {
         setApiResponseMessage(`❌ ${data.message}`);
         // If there's an error, refresh history separately
-        fetch('https://luckymillion.pro/api/digitbet/history', {
+        fetch('https://moonstar543.pro/api/digitbet/history', {
           headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('token'),
-            'Accept': 'application/json'
-          }
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+            Accept: 'application/json',
+          },
         })
-          .then(res => res.json())
-          .then(historyData => {
+          .then((res) => res.json())
+          .then((historyData) => {
             if (historyData.success) {
               setHistory(historyData.data || []);
             }
           });
       }
     } catch (error) {
-      setApiResponseMessage(`❌ Backend Error: ${error.message || 'Could not connect to backend.'}`);
+      setApiResponseMessage(
+        `❌ Backend Error: ${error.message || 'Could not connect to backend.'}`
+      );
     } finally {
       setLoading(false);
     }
@@ -237,7 +285,7 @@ export default function DigitBetGame() {
 
     let winStatus;
     if (selectedDigit !== null) {
-      winStatus = (newNumber === selectedDigit) ? 'win' : 'lose';
+      winStatus = newNumber === selectedDigit ? 'win' : 'lose';
       setResultMessage(
         winStatus === 'win'
           ? `You Won! The number was ${newNumber}.`
@@ -263,7 +311,7 @@ export default function DigitBetGame() {
     setCountdown(90);
     if (timerRef.current) clearInterval(timerRef.current);
     timerRef.current = setInterval(() => {
-      setCountdown(prev => {
+      setCountdown((prev) => {
         if (prev === 1) {
           clearInterval(timerRef.current);
           setCountdown(null);
@@ -301,22 +349,27 @@ export default function DigitBetGame() {
   };
 
   return (
-    <Container className="d-flex align-items-center justify-content-center min-vh-100" style={{ background: 'linear-gradient(135deg, #7b2ff2 0%, #f357a8 100%)' }}>
-      <Row className="w-100 justify-content-center">
+    <Container
+      className='d-flex align-items-center justify-content-center min-vh-100'
+      style={{
+        background: 'linear-gradient(135deg, #7b2ff2 0%, #f357a8 100%)',
+      }}
+    >
+      <Row className='w-100 justify-content-center'>
         <Col xs={12} md={8} lg={6}>
-          <Card className="shadow-lg p-4 rounded-4">
+          <Card className='shadow-lg p-4 rounded-4'>
             <Card.Body>
               <UserBalance balance={user?.balance} />
-              <h1 className="text-center mb-4 fw-bold">Digit Bet Game</h1>
-              <div className="mb-4">
+              <h1 className='text-center mb-4 fw-bold'>Digit Bet Game</h1>
+              <div className='mb-4'>
                 <Card
-                  className="text-center p-4"
+                  className='text-center p-4'
                   style={{
                     backgroundImage: `url(${bgImg})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     minHeight: 180,
-                    borderRadius: 12
+                    borderRadius: 12,
                   }}
                 >
                   <Card.Body>
@@ -324,17 +377,21 @@ export default function DigitBetGame() {
                       <img
                         src={digitImages[randomNumber]}
                         alt={randomNumber}
-                        style={{ width: '90px', height: '90px', objectFit: 'contain' }}
+                        style={{
+                          width: '90px',
+                          height: '90px',
+                          objectFit: 'contain',
+                        }}
                       />
                     ) : (
-                      <span className="display-4 text-white">?</span>
+                      <span className='display-4 text-white'>?</span>
                     )}
                   </Card.Body>
                 </Card>
               </div>
-              <h4 className="text-center mb-3">Select Bet Digit</h4>
-              <div className="d-flex justify-content-center mb-2 gap-2">
-                {[0, 1, 2, 3, 4].map(num => (
+              <h4 className='text-center mb-3'>Select Bet Digit</h4>
+              <div className='d-flex justify-content-center mb-2 gap-2'>
+                {[0, 1, 2, 3, 4].map((num) => (
                   <img
                     key={num}
                     src={digitImages[num]}
@@ -343,17 +400,21 @@ export default function DigitBetGame() {
                       width: 40,
                       height: 40,
                       objectFit: 'contain',
-                      border: selectedDigit === num ? '3px solid #007bff' : '2px solid transparent',
+                      border:
+                        selectedDigit === num
+                          ? '3px solid #007bff'
+                          : '2px solid transparent',
                       borderRadius: '50%',
                       cursor: 'pointer',
-                      boxShadow: selectedDigit === num ? '0 0 8px #007bff' : undefined
+                      boxShadow:
+                        selectedDigit === num ? '0 0 8px #007bff' : undefined,
                     }}
                     onClick={() => selectDigit(num)}
                   />
                 ))}
               </div>
-              <div className="d-flex justify-content-center mb-3 gap-2">
-                {[5, 6, 7, 8, 9].map(num => (
+              <div className='d-flex justify-content-center mb-3 gap-2'>
+                {[5, 6, 7, 8, 9].map((num) => (
                   <img
                     key={num}
                     src={digitImages[num]}
@@ -362,19 +423,23 @@ export default function DigitBetGame() {
                       width: 40,
                       height: 40,
                       objectFit: 'contain',
-                      border: selectedDigit === num ? '3px solid #007bff' : '2px solid transparent',
+                      border:
+                        selectedDigit === num
+                          ? '3px solid #007bff'
+                          : '2px solid transparent',
                       borderRadius: '50%',
                       cursor: 'pointer',
-                      boxShadow: selectedDigit === num ? '0 0 8px #007bff' : undefined
+                      boxShadow:
+                        selectedDigit === num ? '0 0 8px #007bff' : undefined,
                     }}
                     onClick={() => selectDigit(num)}
                   />
                 ))}
               </div>
-              <div className="d-flex justify-content-center gap-3 mb-3">
+              <div className='d-flex justify-content-center gap-3 mb-3'>
                 <Button
                   variant={betType === 'big' ? 'warning' : 'outline-warning'}
-                  size="lg"
+                  size='lg'
                   className={betType === 'big' ? 'fw-bold shadow' : ''}
                   onClick={() => placeBet('big')}
                   disabled={loading || selectedDigit !== null}
@@ -383,7 +448,7 @@ export default function DigitBetGame() {
                 </Button>
                 <Button
                   variant={betType === 'small' ? 'primary' : 'outline-primary'}
-                  size="lg"
+                  size='lg'
                   className={betType === 'small' ? 'fw-bold shadow' : ''}
                   onClick={() => placeBet('small')}
                   disabled={loading || selectedDigit !== null}
@@ -393,64 +458,115 @@ export default function DigitBetGame() {
               </div>
               {/* Show result message or countdown timer in the result area */}
               {countdown !== null ? (
-                <Alert variant="warning" className="text-center fw-bold" style={{ fontSize: '1.5rem' }}>
+                <Alert
+                  variant='warning'
+                  className='text-center fw-bold'
+                  style={{ fontSize: '1.5rem' }}
+                >
                   Rolling in {countdown}...
                 </Alert>
               ) : (
                 resultMessage && (
-                  <Alert variant={resultMessage.includes('Won') ? 'success' : resultMessage.includes('Lost') ? 'danger' : 'info'} className="text-center fw-bold">
+                  <Alert
+                    variant={
+                      resultMessage.includes('Won')
+                        ? 'success'
+                        : resultMessage.includes('Lost')
+                        ? 'danger'
+                        : 'info'
+                    }
+                    className='text-center fw-bold'
+                  >
                     {resultMessage}
                   </Alert>
                 )
               )}
-              <div className="mb-3">
-                <div className="mb-2 d-flex justify-content-between align-items-center">
-                  <label htmlFor="betAmount" className="form-label fw-bold mb-0">Bet Amount</label>
-                  <span className="fw-bold text-primary" style={{ fontSize: '1rem' }}>
-                    Balance: {user?.balance ? parseFloat(user.balance).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}
+              <div className='mb-3'>
+                <div className='mb-2 d-flex justify-content-between align-items-center'>
+                  <label
+                    htmlFor='betAmount'
+                    className='form-label fw-bold mb-0'
+                  >
+                    Bet Amount
+                  </label>
+                  <span
+                    className='fw-bold text-primary'
+                    style={{ fontSize: '1rem' }}
+                  >
+                    Balance:{' '}
+                    {user?.balance
+                      ? parseFloat(user.balance).toLocaleString(undefined, {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })
+                      : '0.00'}
                   </span>
                 </div>
                 <input
-                  type="number"
-                  className="form-control"
-                  id="betAmount"
+                  type='number'
+                  className='form-control'
+                  id='betAmount'
                   value={betAmount}
-                  onChange={e => setBetAmount(Number(e.target.value))}
-                  style={{ maxWidth: 200, margin: '0 auto', background: '#f8f9fa', cursor: 'pointer' }}
+                  onChange={(e) => setBetAmount(Number(e.target.value))}
+                  style={{
+                    maxWidth: 200,
+                    margin: '0 auto',
+                    background: '#f8f9fa',
+                    cursor: 'pointer',
+                  }}
                   onClick={() => setShowBetModal(true)}
-                  placeholder="Set bet amount via modal"
+                  placeholder='Set bet amount via modal'
                 />
               </div>
-              <div className="d-flex justify-content-center gap-2">
-                {[1, 5, 10, 20, 50, 100].map(mult => (
+              <div className='d-flex justify-content-center gap-2'>
+                {[1, 5, 10, 20, 50, 100].map((mult) => (
                   <Button
                     key={mult}
-                    variant={betMultiplier === mult ? 'primary' : 'outline-primary'}
-                    size="sm"
+                    variant={
+                      betMultiplier === mult ? 'primary' : 'outline-primary'
+                    }
+                    size='sm'
                     onClick={() => setBetMultiplier(mult)}
                   >
                     x{mult}
                   </Button>
                 ))}
               </div>
-              <div className="text-center fw-bold my-2" style={{fontSize: '1.1rem'}}>
+              <div
+                className='text-center fw-bold my-2'
+                style={{ fontSize: '1.1rem' }}
+              >
                 {betAmount > 0 && betMultiplier > 0 && (
                   <>
-                    {betAmount} x {betMultiplier} = <span className="text-primary">{betAmount * betMultiplier}</span>
+                    {betAmount} x {betMultiplier} ={' '}
+                    <span className='text-primary'>
+                      {betAmount * betMultiplier}
+                    </span>
                   </>
                 )}
               </div>
-              <div className="mb-3">
+              <div className='mb-3'>
                 <Button
-                  variant="primary"
-                  size="lg"
-                  className="w-100 fw-bold"
+                  variant='primary'
+                  size='lg'
+                  className='w-100 fw-bold'
                   onClick={handleRoll}
-                  disabled={(!betType && selectedDigit === null) || loading || countdown !== null}
+                  disabled={
+                    (!betType && selectedDigit === null) ||
+                    loading ||
+                    countdown !== null
+                  }
                 >
                   {loading ? (
                     <>
-                      <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" className="me-2" />
+                      <Spinner
+                        as='span'
+                        animation='border'
+                        size='sm'
+                        role='status'
+                        aria-hidden='true'
+                        className='me-2'
+                      />
                       Rolling...
                     </>
                   ) : (
@@ -459,22 +575,37 @@ export default function DigitBetGame() {
                 </Button>
               </div>
               {apiResponseMessage && (
-                <Alert variant={apiResponseMessage.includes('Error') ? 'danger' : 'secondary'} className="text-center">
+                <Alert
+                  variant={
+                    apiResponseMessage.includes('Error')
+                      ? 'danger'
+                      : 'secondary'
+                  }
+                  className='text-center'
+                >
                   {apiResponseMessage}
                 </Alert>
               )}
               {history.length > 0 && (
-                <div className="mt-4">
+                <div className='mt-4'>
                   <h5>Bet History</h5>
                   <BetHistoryTable history={history} />
                 </div>
               )}
-              <div className="mt-4 text-center text-muted">
+              <div className='mt-4 text-center text-muted'>
                 <div>
-                  <strong>Current Bet:</strong> {selectedDigit !== null ? `Digit ${selectedDigit}` : betType ? betType.charAt(0).toUpperCase() + betType.slice(1) : 'None'}
+                  <strong>Current Bet:</strong>{' '}
+                  {selectedDigit !== null
+                    ? `Digit ${selectedDigit}`
+                    : betType
+                    ? betType.charAt(0).toUpperCase() + betType.slice(1)
+                    : 'None'}
                 </div>
                 <div>
-                  <small>Select a digit or a bet (Small/Big) and then click <b>"Roll the Dice!"</b></small>
+                  <small>
+                    Select a digit or a bet (Small/Big) and then click{' '}
+                    <b>"Roll the Dice!"</b>
+                  </small>
                 </div>
               </div>
             </Card.Body>

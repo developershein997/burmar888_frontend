@@ -1,15 +1,22 @@
- import { forwardRef } from "react";
+import { forwardRef } from 'react';
 
 const VideoCard = forwardRef(({ video }, ref) => {
-
   return (
-    <div className="videocard" style={{ height: "80vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
+    <div
+      className='videocard'
+      style={{
+        height: '80vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
       <video
         ref={ref}
-        className="videocard__video"
-        src={'https://luckymillion.pro/api/..'+video}
+        className='videocard__video'
+        src={'https://moonstar543.pro/api/..' + video}
         loop
-         style={{ width: "100%", height: "100%" }}
+        style={{ width: '100%', height: '100%' }}
       />
     </div>
   );
